@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 untuk kamu</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-dark: #f06292;
+    --soft: #fff0f6;
+    --text: #7b3f5e;
+    --text-light: #c2607e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--soft);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E🌸%3C/text%3E%3C/svg%3E") 16 16, auto;
+  }
+  .bg-layer { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .petal { position:absolute; animation:fall linear infinite; opacity:0.5; }
+  @keyframes fall {
+    0%   { transform:translateY(-60px) rotate(0deg); opacity:0; }
+    10%  { opacity:0.55; }
+    90%  { opacity:0.45; }
+    100% { transform:translateY(110vh) rotate(360deg); opacity:0; }
+  }
+  .hero { position:relative; z-index:1; text-align:center; padding:55px 20px 24px; }
+  .kitty-wrap { display:inline-block; animation:floatBob 3s ease-in-out infinite; margin-bottom:16px; }
+  @keyframes floatBob {
+    0%,100% { transform:translateY(0) rotate(-2deg); }
+    50%      { transform:translateY(-14px) rotate(2deg); }
+  }
+  .kitty-svg { width:120px; height:120px; filter:drop-shadow(0 6px 18px rgba(240,98,146,.3)); }
+  .title {
+    font-family:'Pacifico',cursive;
+    font-size:clamp(1.9rem,6vw,3.2rem);
+    color:var(--pink-dark);
+    text-shadow:3px 3px 0 #fff, 5px 5px 0 #f9a8c9;
+    animation:titlePop .8s cubic-bezier(.36,1.5,.6,1) both;
+  }
+  @keyframes titlePop { from{transform:scale(0) rotate(-8deg);opacity:0;} to{transform:scale(1) rotate(0);opacity:1;} }
+  .subtitle { margin-top:8px; font-size:.95rem; color:var(--text-light); font-weight:700; animation:fadeUp .9s .3s both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+  .card {
+    position:relative; z-index:1;
+    background:rgba(255,255,255,0.88);
+    border:2.5px solid #fbb8d0; border-radius:30px;
+    padding:30px 28px 28px; max-width:620px;
+    margin:0 auto 36px;
+    box-shadow:0 8px 40px rgba(240,98,146,.13);
+    animation:fadeUp .9s .5s both; backdrop-filter:blur(8px);
+  }
+  .msg-tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:20px; }
+  .tab-btn {
+    padding:7px 15px; border-radius:50px; border:2px solid #f9a8c9; background:#fff;
+    color:var(--text-light); font-family:'Nunito',sans-serif; font-weight:700; font-size:.84rem; cursor:pointer; transition:all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background:linear-gradient(135deg,#f06292,#f48fb1); color:#fff; border-color:transparent;
+    transform:scale(1.05); box-shadow:0 4px 14px rgba(240,98,146,.35);
+  }
+  .typewriter-box {
+    background:linear-gradient(135deg,#fff0f6,#ffe4f0); border:2px dashed #f9a8c9; border-radius:18px;
+    padding:22px 20px; min-height:120px; font-size:1.06rem; line-height:1.9;
+    color:var(--text); font-weight:600; margin-bottom:20px;
+  }
+  .cursor {
+    display:inline-block; width:2px; height:1.1em; background:var(--pink-dark);
+    margin-left:2px; vertical-align:text-bottom; animation:blink .7s step-end infinite;
+  }
+  @keyframes blink { 50%{opacity:0;} }
+  .heart-row { text-align:center; font-size:1.4rem; letter-spacing:3px; margin-bottom:10px; min-height:32px; }
+  .heart-pop { display:inline-block; animation:heartPop .4s cubic-bezier(.36,1.8,.6,1) both; }
+  @keyframes heartPop { from{transform:scale(0);opacity:0;} to{transform:scale(1);opacity:1;} }
+  .controls { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-bottom:10px; }
+  .btn {
+    padding:10px 18px; border:none; outline:none; border-radius:50px;
+    font-family:'Nunito',sans-serif; font-size:.9rem; font-weight:800; cursor:pointer;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:active { transform:scale(.93) !important; }
+  .btn-play   { background:linear-gradient(135deg,#f06292,#f48fb1); color:#fff; box-shadow:0 4px 16px rgba(240,98,146,.4); }
+  .btn-play:hover   { box-shadow:0 6px 22px rgba(240,98,146,.55); transform:translateY(-2px); }
+  .btn-retype { background:linear-gradient(135deg,#fce4ec,#f8bbd0); color:var(--text); }
+  .btn-retype:hover { transform:translateY(-2px); }
+  .btn-sound  { background:linear-gradient(135deg,#fff,#fce4ec); color:var(--pink-dark); border:2px solid #f9a8c9; }
+  .btn-sound:hover  { transform:translateY(-2px); }
+  .btn-music  { background:linear-gradient(135deg,#e8f5e9,#c8e6c9); color:#2e7d32; }
+  .btn-music.playing { background:linear-gradient(135deg,#ffcdd2,#ef9a9a); color:#c62828; }
+  .btn-music:hover  { transform:translateY(-2px); }
+  #envelope-section { display:block; }
+  #main-section { display:none; }
+  .envelope-wrap { position:relative; z-index:1; text-align:center; padding:28px 20px 0; animation:fadeUp 1s .2s both; }
+  .envelope-btn {
+    background:linear-gradient(135deg,#f06292,#e91e63); color:#fff; padding:16px 36px;
+    border-radius:60px; font-family:'Pacifico',cursive; font-size:1.25rem; border:none; cursor:pointer;
+    box-shadow:0 8px 28px rgba(233,30,99,.4); animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow:0 8px 28px rgba(233,30,99,.4); }
+    50%      { box-shadow:0 12px 40px rgba(233,30,99,.6); transform:scale(1.04); }
+  }
+  .flower-bar { text-align:center; font-size:1.5rem; letter-spacing:6px; margin:14px 0; animation:sway 4s ease-in-out infinite alternate; }
+  @keyframes sway { 0%{letter-spacing:6px;} 100%{letter-spacing:10px;} }
+  .fly-heart { position:fixed; pointer-events:none; z-index:999; animation:flyUp .9s ease-out forwards; }
+  @keyframes flyUp { 0%{transform:translate(-50%,-50%) scale(1);opacity:1;} 100%{transform:translate(-50%,-130px) scale(1.5);opacity:0;} }
+  .sparkle { position:fixed; pointer-events:none; z-index:998; animation:sparkleAnim .7s ease-out forwards; }
+  @keyframes sparkleAnim { 0%{transform:translate(-50%,-50%) scale(0) rotate(0deg);opacity:1;} 100%{transform:translate(-50%,-50%) scale(1.8) rotate(180deg);opacity:0;} }
+  .footer { position:relative; z-index:1; text-align:center; padding:8px 20px 36px; color:var(--text-light); font-size:.84rem; font-weight:600; }
+  @media(max-width:480px){ .card{margin:0 12px 36px;padding:22px 14px;} .btn{padding:9px 13px;font-size:.82rem;} }
+</style>
+</head>
+<body>
+
+<div class="bg-layer" id="bgLayer"></div>
+
+<!-- ENVELOPE -->
+<div id="envelope-section">
+  <div class="hero">
+    <div class="kitty-wrap">
+      <svg class="kitty-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="145" rx="52" ry="48" fill="#fff" stroke="#fbb8d0" stroke-width="3"/>
+        <ellipse cx="100" cy="90" rx="62" ry="58" fill="#fff" stroke="#fbb8d0" stroke-width="3"/>
+        <polygon points="52,42 38,12 72,32" fill="#fff" stroke="#fbb8d0" stroke-width="2.5"/>
+        <polygon points="148,42 162,12 128,32" fill="#fff" stroke="#fbb8d0" stroke-width="2.5"/>
+        <polygon points="54,40 44,20 68,34" fill="#f9a8c9"/>
+        <polygon points="146,40 156,20 132,34" fill="#f9a8c9"/>
+        <ellipse cx="82" cy="86" rx="8" ry="9" fill="#3d2b1f"/>
+        <ellipse cx="118" cy="86" rx="8" ry="9" fill="#3d2b1f"/>
+        <circle cx="85" cy="83" r="3" fill="#fff"/>
+        <circle cx="121" cy="83" r="3" fill="#fff"/>
+        <ellipse cx="100" cy="99" rx="5" ry="3.5" fill="#f06292"/>
+        <line x1="30" y1="95" x2="88" y2="100" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="30" y1="103" x2="88" y2="103" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="30" y1="111" x2="88" y2="106" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="95" x2="112" y2="100" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="103" x2="112" y2="103" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="111" x2="112" y2="106" stroke="#ddd" stroke-width="1.8"/>
+        <ellipse cx="140" cy="54" rx="14" ry="10" fill="#f06292"/>
+        <ellipse cx="160" cy="50" rx="12" ry="8" fill="#f06292"/>
+        <circle cx="150" cy="52" r="5" fill="#c2185b"/>
+        <path d="M70 155 Q100 165 130 155" stroke="#f9a8c9" stroke-width="3" fill="none"/>
+        <ellipse cx="56" cy="148" rx="14" ry="8" fill="#fff" stroke="#fbb8d0" stroke-width="2" transform="rotate(-25,56,148)"/>
+        <ellipse cx="144" cy="148" rx="14" ry="8" fill="#fff" stroke="#fbb8d0" stroke-width="2" transform="rotate(25,144,148)"/>
+        <text x="36" y="155" font-size="16">💕</text>
+      </svg>
+    </div>
+    <div class="title">ada sesuatu yang mau aku bilang 🌸</div>
+    <div class="subtitle">buka dulu ya~ 🤍</div>
+  </div>
+  <div class="envelope-wrap">
+    <div class="flower-bar">🌸🌷🌸🌷🌸</div>
+    <button class="envelope-btn" onclick="openEnvelope()">💌 buka suratnya</button>
+    <div class="flower-bar" style="margin-top:14px;">🌷🌸🌷🌸🌷</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main-section">
+  <div class="hero">
+    <div class="kitty-wrap">
+      <svg class="kitty-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="145" rx="52" ry="48" fill="#fff" stroke="#fbb8d0" stroke-width="3"/>
+        <ellipse cx="100" cy="90" rx="62" ry="58" fill="#fff" stroke="#fbb8d0" stroke-width="3"/>
+        <polygon points="52,42 38,12 72,32" fill="#fff" stroke="#fbb8d0" stroke-width="2.5"/>
+        <polygon points="148,42 162,12 128,32" fill="#fff" stroke="#fbb8d0" stroke-width="2.5"/>
+        <polygon points="54,40 44,20 68,34" fill="#f9a8c9"/>
+        <polygon points="146,40 156,20 132,34" fill="#f9a8c9"/>
+        <ellipse cx="82" cy="86" rx="8" ry="9" fill="#3d2b1f"/>
+        <ellipse cx="118" cy="86" rx="8" ry="9" fill="#3d2b1f"/>
+        <circle cx="85" cy="83" r="3" fill="#fff"/>
+        <circle cx="121" cy="83" r="3" fill="#fff"/>
+        <ellipse cx="100" cy="99" rx="5" ry="3.5" fill="#f06292"/>
+        <line x1="30" y1="95" x2="88" y2="100" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="30" y1="103" x2="88" y2="103" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="30" y1="111" x2="88" y2="106" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="95" x2="112" y2="100" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="103" x2="112" y2="103" stroke="#ddd" stroke-width="1.8"/>
+        <line x1="170" y1="111" x2="112" y2="106" stroke="#ddd" stroke-width="1.8"/>
+        <ellipse cx="140" cy="54" rx="14" ry="10" fill="#f06292"/>
+        <ellipse cx="160" cy="50" rx="12" ry="8" fill="#f06292"/>
+        <circle cx="150" cy="52" r="5" fill="#c2185b"/>
+        <path d="M70 155 Q100 165 130 155" stroke="#f9a8c9" stroke-width="3" fill="none"/>
+        <ellipse cx="56" cy="148" rx="14" ry="8" fill="#fff" stroke="#fbb8d0" stroke-width="2" transform="rotate(-25,56,148)"/>
+        <ellipse cx="144" cy="148" rx="14" ry="8" fill="#fff" stroke="#fbb8d0" stroke-width="2" transform="rotate(25,144,148)"/>
+        <text x="36" y="155" font-size="16">💕</text>
+      </svg>
+    </div>
+    <div class="title">untuk kamu 💌</div>
+    <div class="subtitle">dari hati, cuma buat kamu~</div>
+  </div>
+
+  <div class="card">
+    <div class="msg-tabs" id="msgTabs"></div>
+    <div class="typewriter-box">
+      <span id="typeText"></span><span class="cursor"></span>
+    </div>
+    <div class="heart-row" id="heartRow"></div>
+    <div class="controls">
+      <button class="btn btn-retype" onclick="reType()">🔄 ulangi</button>
+      <button class="btn btn-play" onclick="nextMsg()">💌 pesan berikutnya</button>
+      <button class="btn btn-sound" onclick="playBubble(event)">🫧 bubble!</button>
+      <button class="btn btn-music" id="musicBtn" onclick="toggleMusic()">🎹 play musik</button>
+    </div>
+    <div style="text-align:center;margin-top:10px;">
+      <button class="btn btn-sound" style="font-size:.82rem;padding:8px 18px;" onclick="shootHearts(event)">💕 kirim cinta</button>
+    </div>
+  </div>
+  <div class="footer">🌸 ditulis dengan tulus, cuma buat kamu 🌸</div>
+</div>
+
+<script>
+// ============================================================
+//  MESSAGES
+// ============================================================
+const MESSAGES = {
+  "🌟 motivasi": [
+    "dee, kamu udah melewati banyak hal yang nggak semua orang kuat hadapin. itu bukan hal kecil. 🌸",
+    "nggak perlu jadi sempurna. cukup tetap jalan, pelan-pelan juga nggak apa-apa. 🤍",
+    "apa yang lagi kamu rasain itu valid. tapi kamu juga lebih kuat dari yang kamu kira. 💕",
+    "badai nggak selamanya. dan kamu bukan orang yang menyerah di tengah jalan. 🌷",
+  ],
+  "💕 jujur": [
+    "jujur kaka seneng bisa ketemu kamu, dee~ kita saling bagi-bagi cerita satu sama lain, kadang cerita sedih and kadang cerita lucu 💕",
+  ],
+  "💌 pesan": [
+    "haii dee, airin tetap kuat ya dalam masalah apapun dalam hidup kamu, seberat apapun itu — kamu harus tetap kuat dan semangat. jangan tinggalin sholat, dan kalau ada masalah kamu boleh kok cerita ke kaka, curhat ke kaka. tapi ingat ya, tempat curhat dan minta pertolongan terbaik hanya pada tuhan-mu (allah) 🤍",
+  ],
+};
+
+// ============================================================
+//  PIANO — simple & reliable, anime OST vibes
+//  Menggunakan sine + triangle oscillator, soft envelope
+//  TANPA convolver (penyebab error sebelumnya)
+// ============================================================
+let audioCtx     = null;
+let musicPlaying = false;
+let loopTimeout  = null;
+let allOscs      = [];
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// Master output dengan soft limiter
+function getMaster(ctx) {
+  if (!getMaster._node) {
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -18;
+    comp.knee.value      = 10;
+    comp.ratio.value     = 4;
+    comp.attack.value    = 0.05;
+    comp.release.value   = 0.3;
+    comp.connect(ctx.destination);
+    getMaster._node = comp;
+  }
+  return getMaster._node;
+}
+
+function playNote(ctx, freq, startTime, dur, vol, type='sine') {
+  try {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+
+    // Piano-like envelope: quick attack, medium decay, soft release
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(vol, startTime + 0.015);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.5, startTime + 0.12);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.25, startTime + dur * 0.6);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + dur + 0.4);
+
+    osc.connect(gain);
+    gain.connect(getMaster(ctx));
+    osc.start(startTime);
+    osc.stop(startTime + dur + 0.5);
+    allOscs.push(osc);
+  } catch(e) { console.warn('note err', e); }
+}
+
+// Chord helper — play arpeggio
+function arpChord(ctx, freqs, startTime, dur, vol, spread=0.06) {
+  freqs.forEach((f, i) => playNote(ctx, f, startTime + i*spread, dur, vol));
+}
+
+// ============================================================
+//  SONG DATA — C major, anime piano style, BPM 54
+// ============================================================
+const BPM  = 54;
+const B    = 60 / BPM; // seconds per beat
+
+// Notes (Hz)
+const C3=130.81, D3=146.83, E3=164.81, F3=174.61, G3=196.00, A3=220.00, B3=246.94;
+const C4=261.63, D4=293.66, E4=329.63, F4=349.23, G4=392.00, A4=440.00, B4=493.88;
+const C5=523.25, D5=587.33, E5=659.25, G5=783.99, A5=880.00;
+
+// [beat, freq, durationBeats, vol]
+const MELODY_NOTES = [
+  // bar 1 (C)
+  [0,    E4, 1.5, 0.20],
+  [1.5,  G4, 1.0, 0.18],
+  [2.5,  A4, 1.5, 0.22],
+  // bar 2 (Am)
+  [4,    G4, 1.0, 0.18],
+  [5,    E4, 1.5, 0.20],
+  [6.5,  D4, 1.0, 0.17],
+  // bar 3 (F)
+  [8,    C4, 1.0, 0.18],
+  [9,    D4, 1.0, 0.18],
+  [10,   E4, 2.0, 0.20],
+  // bar 4 (G)
+  [12,   G4, 1.0, 0.20],
+  [13,   A4, 1.0, 0.20],
+  [14,   G4, 2.0, 0.18],
+  // bar 5 (C)
+  [16,   E4, 1.0, 0.18],
+  [17,   G4, 1.0, 0.20],
+  [18,   C5, 2.0, 0.24],
+  // bar 6 (Am)
+  [20,   A4, 1.5, 0.20],
+  [21.5, G4, 1.0, 0.18],
+  [22.5, E4, 1.5, 0.18],
+  // bar 7 (F)
+  [24,   D4, 1.0, 0.17],
+  [25,   E4, 1.0, 0.18],
+  [26,   F4, 2.0, 0.20],
+  // bar 8 (G → C)
+  [28,   E4, 1.0, 0.18],
+  [29,   D4, 1.0, 0.17],
+  [30,   C4, 2.5, 0.22],
+];
+
+// Chord arpeggios [beat, [freqs], dur, vol]
+const CHORD_NOTES = [
+  // C chord
+  [0,  [C3,E3,G3], 1.8, 0.10],
+  [2,  [C3,E3,G3], 1.8, 0.09],
+  // Am
+  [4,  [A3,C4,E4], 1.8, 0.10],
+  [6,  [A3,C4,E4], 1.8, 0.09],
+  // F
+  [8,  [F3,A3,C4], 1.8, 0.10],
+  [10, [F3,A3,C4], 1.8, 0.09],
+  // G
+  [12, [G3,B3,D4], 1.8, 0.10],
+  [14, [G3,B3,D4], 1.8, 0.09],
+  // C
+  [16, [C3,E3,G3], 1.8, 0.10],
+  [18, [C3,E3,G3], 1.8, 0.09],
+  // Am
+  [20, [A3,C4,E4], 1.8, 0.10],
+  [22, [A3,C4,E4], 1.8, 0.09],
+  // F
+  [24, [F3,A3,C4], 1.8, 0.10],
+  [26, [F3,A3,C4], 1.8, 0.09],
+  // G → C
+  [28, [G3,B3,D4], 1.8, 0.10],
+  [30, [C3,E3,G3], 2.5, 0.11],
+];
+
+const LOOP_BEATS = 32;
+const LOOP_SEC   = LOOP_BEATS * B;
+
+function scheduleLoop(startTime, loopNum) {
+  if (!musicPlaying) return;
+  const ctx = getCtx();
+  const t0  = startTime + loopNum * LOOP_SEC;
+
+  MELODY_NOTES.forEach(([beat, freq, dur, vol]) => {
+    playNote(ctx, freq, t0 + beat*B, dur*B, vol, 'sine');
+    // subtle harmonic layer
+    playNote(ctx, freq * 2, t0 + beat*B, dur*B, vol * 0.08, 'sine');
+  });
+
+  CHORD_NOTES.forEach(([beat, freqs, dur, vol]) => {
+    arpChord(ctx, freqs, t0 + beat*B, dur*B, vol, 0.07);
+  });
+
+  loopTimeout = setTimeout(
+    () => scheduleLoop(startTime, loopNum + 1),
+    (LOOP_SEC - 1.0) * 1000
+  );
+}
+
+function startMusic() {
+  const ctx = getCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+  getMaster._node = null; // reset master
+  scheduleLoop(ctx.currentTime + 0.1, 0);
+}
+
+function stopMusic() {
+  clearTimeout(loopTimeout);
+  allOscs.forEach(o => { try { o.stop(); } catch(e){} });
+  allOscs = [];
+  getMaster._node = null;
+}
+
+function toggleMusic() {
+  musicPlaying = !musicPlaying;
+  const btn = document.getElementById('musicBtn');
+  if (musicPlaying) {
+    btn.textContent = '⏹ stop musik';
+    btn.classList.add('playing');
+    startMusic();
+  } else {
+    btn.textContent = '🎹 play musik';
+    btn.classList.remove('playing');
+    stopMusic();
+  }
+}
+
+// ============================================================
+//  BUBBLE SOUND
+// ============================================================
+function playBubbleSound() {
+  try {
+    const ctx  = getCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(900, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1500, ctx.currentTime + 0.07);
+    osc.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + 0.18);
+    gain.gain.setValueAtTime(0.13, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+function playBubble(e) { playBubbleSound(); shootSparkles(e); }
+
+// ============================================================
+//  TYPEWRITER
+// ============================================================
+let currentCat = Object.keys(MESSAGES)[0];
+let currentIdx = 0, typeTimer = null, charIdx = 0;
+
+function startType(cat, idx) {
+  clearTimeout(typeTimer); charIdx = 0;
+  document.getElementById('typeText').textContent = '';
+  typeNext(MESSAGES[cat][idx]);
+}
+function typeNext(msg) {
+  if (charIdx <= msg.length) {
+    document.getElementById('typeText').textContent = msg.slice(0, charIdx++);
+    typeTimer = setTimeout(() => typeNext(msg), 25);
+  }
+}
+function reType()  { playBubbleSound(); startType(currentCat, currentIdx); }
+function nextMsg() {
+  playBubbleSound(); addHeart();
+  currentIdx = (currentIdx + 1) % MESSAGES[currentCat].length;
+  startType(currentCat, currentIdx);
+}
+
+// ============================================================
+//  TABS
+// ============================================================
+function buildTabs() {
+  const c = document.getElementById('msgTabs');
+  Object.keys(MESSAGES).forEach((cat, i) => {
+    const b = document.createElement('button');
+    b.className = 'tab-btn' + (i===0 ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = () => {
+      document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      currentCat = cat; currentIdx = 0;
+      startType(cat, 0); playBubbleSound();
+    };
+    c.appendChild(b);
+  });
+}
+
+// ============================================================
+//  HEARTS & SPARKLES
+// ============================================================
+let heartCount = 0;
+function addHeart() {
+  heartCount++;
+  const row = document.getElementById('heartRow');
+  const s = document.createElement('span');
+  s.className = 'heart-pop';
+  s.textContent = ['💖','💗','💓','🩷'][heartCount % 4];
+  row.appendChild(s);
+  if (row.children.length > 12) row.removeChild(row.children[0]);
+}
+function shootHearts(e) {
+  playBubbleSound(); addHeart();
+  const emojis = ['💕','💖','🌸','✨','💗','🎀'];
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'fly-heart';
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.cssText = `left:${e.clientX+(Math.random()-.5)*70}px;top:${e.clientY}px;font-size:${1+Math.random()*.6}rem`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 950);
+    }, i*75);
+  }
+}
+function shootSparkles(e) {
+  const sparks = ['✨','🌸','💫','⭐','💕','🎀'];
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'sparkle';
+      el.textContent = sparks[Math.floor(Math.random()*sparks.length)];
+      const angle = (Math.PI*2/10)*i, dist = 55+Math.random()*55;
+      el.style.cssText = `left:${e.clientX+Math.cos(angle)*dist}px;top:${e.clientY+Math.sin(angle)*dist}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    }, i*35);
+  }
+}
+document.addEventListener('click', e => {
+  if (Math.random() < 0.35) {
+    const el = document.createElement('div');
+    el.className = 'fly-heart';
+    el.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;font-size:.9rem`;
+    el.textContent = ['🌸','💕','✨'][Math.floor(Math.random()*3)];
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 950);
+  }
+});
+
+// ============================================================
+//  OPEN ENVELOPE
+// ============================================================
+function openEnvelope() {
+  playBubbleSound();
+  shootSparkles({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
+  document.getElementById('envelope-section').style.display = 'none';
+  document.getElementById('main-section').style.display = 'block';
+}
+
+// ============================================================
+//  BACKGROUND PETALS
+// ============================================================
+function spawnPetals() {
+  const layer  = document.getElementById('bgLayer');
+  const emojis = ['🌸','🌷','💮','🌺','💕','✨','🎀','🩷'];
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left  = Math.random()*100 + 'vw';
+    el.style.fontSize = (.8+Math.random()*1.1) + 'rem';
+    el.style.animationDuration = (7+Math.random()*10) + 's';
+    el.style.animationDelay    = (-Math.random()*12) + 's';
+    layer.appendChild(el);
+  }
+}
+
+window.addEventListener('load', () => { spawnPetals(); buildTabs(); startType(currentCat, 0); });
+</script>
+</body>
+</html>
